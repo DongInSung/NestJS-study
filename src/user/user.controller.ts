@@ -25,46 +25,26 @@ export class UserController {
     @Get('/:userId')
     async getOne(@Param("userId") userId: number): Promise<User> {
 
-        const result = await this.userService.getOne(userId);
-        if (!result) {
-            // http status 404 - Not Found
-            throw new NotFoundException(`DB에 없는 userId`);
-        }
-        return result;
+        return this.userService.getOne(userId);
     }
 
     @Delete('/:userId')
-    async deleteUser(@Param("userId") id: number): Promise<boolean> {
-
-        const result = await this.userService.deleteUser(id);
-        if (!result) {
-            // http status 404 - Not Found
-            throw new NotFoundException(`DB에 없는 userId`);
-        }
-        return true;
+    async deleteUser(@Param("userId") userId: number): Promise<boolean> {
+        
+        return await this.userService.deleteUser(userId);
     }
 
     @Post('/signin')
     async signInTest(@Body() signInUser: SignInUserDto): Promise<User> {
 
-        const result = await this.userService.signInTest(signInUser);
-        if (!result) {
-            // http status 401 - unauthorized
-            throw new UnauthorizedException(`아이디 및 비밀번호를 다시 확인해 주세요.`);
-        }
-        return result;
+        return this.userService.signInTest(signInUser);
     }
 
     @Post('/signup')
     @HttpCode(201) // created
     async signUpTest(@Body() signUpUser: SignUpUserDto): Promise<boolean> {
 
-        const result: boolean = await this.userService.signUpTest(signUpUser);
-        if (!result) {
-            // http status 409 - Conflict
-            throw new ConflictException(`이미 존재하는 회원입니다.`);
-        }
-        return result;
+        return this.userService.signUpTest(signUpUser);
     }
 
 }
