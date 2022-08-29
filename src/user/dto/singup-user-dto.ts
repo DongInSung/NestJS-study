@@ -4,12 +4,12 @@ import { IsEmail, IsString, Length } from 'class-validator';
 export class SignUpUserDto {
 
     @IsEmail()
-    readonly id: string;
+    readonly userEmail: string;
 
     @IsString()
-    readonly name: string;
+    readonly userName: string;
     
     @IsString()
     //@Length(8, 16)  // 8 ~ 16 자리 길이 제한
-    readonly pw: string;
+    readonly userPw: string;
 }

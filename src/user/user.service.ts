@@ -40,8 +40,8 @@ export class UserService {
         const result = await this.userRepository
             .createQueryBuilder('u')
             .select(['u.user_email, u.user_name, u.user_join_date'])
-            .where('u.user_email = :id', { id: signInUser.id })
-            .andWhere('u.user_pw = :pw', { pw: signInUser.pw })
+            .where('u.user_email = :id', { id: signInUser.userEmail })
+            .andWhere('u.user_pw = :pw', { pw: signInUser.userPw })
             .getRawOne();
 
         if (!result) {
@@ -54,19 +54,20 @@ export class UserService {
 
     async signUpTest(signUpUser: SignUpUserDto): Promise<boolean> {
 
-        const newUser = new User();
-        newUser.user_email = signUpUser.id;
-        newUser.user_pw = signUpUser.pw;
-        newUser.user_name = signUpUser.name;
-
         const result = await this.userRepository.findOneBy({
-            user_email: newUser.user_email
+            user_email: signUpUser.userEmail
         });
 
         if (result) {
             // http status 409 - Conflict
             throw new ConflictException(`이미 존재하는 회원입니다.`);
         }
+
+        const newUser = new User();
+        newUser.user_email = signUpUser.userEmail;
+        newUser.user_pw = signUpUser.userPw;
+        newUser.user_name = signUpUser.userName;
+
         this.userRepository.save(newUser);
 
         return true;
