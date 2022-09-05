@@ -21,7 +21,7 @@ export class UserController {
 
         return this.userService.getAll();
     }
-
+    
     @Get('/:userId')
     async getOne(@Param("userId") userId: number): Promise<User> {
 

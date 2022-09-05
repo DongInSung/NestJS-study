@@ -17,11 +17,9 @@ describe('UserController', () => {
     // fn => Creates a mock function. Optionally takes a mock implementation.
     
     find: jest.fn( () => {
-
     }),
 
     findOneBy: jest.fn((user) => {
-
 
       if (user.user_id) { // user.service => getOne
         const testUser: User = new User();
@@ -34,7 +32,7 @@ describe('UserController', () => {
     }),
 
     save: jest.fn(() => {
-      //console.log("회원가입 완료");
+      console.log("회원가입 완료");
     })
 
   });
@@ -75,7 +73,6 @@ describe('UserController', () => {
       userName: "test",
       userPw: "test"
     }
-
     const result = await controller.signUpTest(newUser);
     expect(result).toBe(true);
   });

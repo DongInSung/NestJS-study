@@ -1,8 +1,10 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Post } from "src/post/entity/post.entity";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity()
 export class User {
+
     @PrimaryGeneratedColumn('increment')
     user_id: number;
 
@@ -27,4 +29,10 @@ export class User {
     })
     user_join_date: Date;
 
+    // OneToMany
+    // One => User
+    // Many => Post
+    @OneToMany(() => Post, post => post.user)
+    @JoinColumn({ name: 'user_id' })
+    posts: Post[];
 }
