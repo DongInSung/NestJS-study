@@ -1,5 +1,6 @@
-import { Controller, Get, Param } from '@nestjs/common';
-import { Post } from './entity/post.entity';
+import { Body, Controller, Get, HttpCode, Param, Post } from '@nestjs/common';
+import { WritePostDto } from './dto/write-post.dto';
+import { Post as PostEntity } from './entity/post.entity';
 import { PostService } from './post.service';
 
 @Controller('post')
@@ -13,13 +14,19 @@ export class PostController {
     }
 
     @Get('/posts')
-    getAll(): Promise<Post[]> {
+    getAll(): Promise<PostEntity[]> {
         return this.postService.getAll();
     }
 
     @Get('/:postId')
-    getPostOne(@Param('postId') postId: number): Promise<Post> {
+    getPostOne(@Param('postId') postId: number): Promise<PostEntity> {
         return this.postService.getPostOne(postId);
+    }
+
+    @Post('/write')
+    @HttpCode(201) // created
+    createPostTest(@Body() writePost : WritePostDto): Promise<boolean> {
+        return this.postService.createPostTest(writePost);
     }
 
     @Get('/:userName/:postId')

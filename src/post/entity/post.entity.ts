@@ -23,7 +23,9 @@ export class Post {
     })
     post_create_date: Date;
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     user_id: number;
 
     // ManyToOne
