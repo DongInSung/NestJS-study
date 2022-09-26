@@ -41,14 +41,13 @@ export class PostService {
 
     async createPostTest(writePost: WritePostDto): Promise<boolean> {
 
-        console.log(writePost);
+        //console.log(writePost);
 
         const newPost = new Post();
         newPost.post_title = writePost.postTitle;
         newPost.post_content = writePost.postContent;
         newPost.user_id = writePost.userNumber;
 
-    
         try {
             await this.postRepository.save(newPost);
         }
@@ -60,5 +59,4 @@ export class PostService {
 
         return true;
     }
-
 }
